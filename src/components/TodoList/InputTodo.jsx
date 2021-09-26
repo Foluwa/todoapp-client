@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Spin } from 'antd';
+import { Form, Input, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const InputTodo = ({ setTodosChange }) => {
@@ -41,20 +41,16 @@ const InputTodo = ({ setTodosChange }) => {
     <Fragment>
       <h1 className="text-center my-5">Input Todo</h1>
       <form className="d-flex" onSubmit={onSubmitForm}>
-        <input
-          type="text"
-          placeholder="add todo"
-          className="form-control"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-        />
-        <button className="btn btn-success ">{addBtn ? <Spin indicator={antIcon} /> : <>Add</>}</button>
 
-        {/* {btnLoading ? <Spin indicator={antIcon} /> :
-            <Button type="primary" htmlType="submit" onClick={onSubmitForm}>
-              Submit
-            </Button>
-          } */}
+        <Form.Item>
+          <Form.Item>
+            <Input size="large" placeholder="Add Todo" value={description}
+              onChange={e => setDescription(e.target.value)} />
+          </Form.Item>
+          <Form.Item>
+            <button className="btn btn-success ">{addBtn ? <Spin indicator={antIcon} /> : <>Add</>}</button>
+          </Form.Item>
+        </Form.Item>
       </form>
     </Fragment>
   );

@@ -19,19 +19,14 @@ toast.configure();
 const App = () => {
   const checkAuthenticated = async () => {
     try {
-
-      console.log('localStorage.token ', localStorage.token)
-      const res = await fetch("http://localhost:3001/me", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${localStorage.token}` }
+      const res = await fetch("http://localhost:5000/authentication/verify", {
+        method: "POST",
+        headers: { jwt_token: localStorage.token }
       });
 
       const parseRes = await res.json();
-      console.log('parseRes RESPOSNE ', parseRes)
-      if (parseRes.email === true) { console.log('USER FOUND') } else { console.log('USER NOT FOUND') }
 
-      //parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
-      parseRes !== null ? setIsAuthenticated(true) : setIsAuthenticated(false);
+      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
     } catch (err) {
       console.error(err.message);
     }
@@ -46,6 +41,7 @@ const App = () => {
   const setAuth = boolean => {
     setIsAuthenticated(boolean);
   };
+
   return (
     <Router>
       <Switch>

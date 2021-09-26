@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Table, Tag, Space } from 'antd';
+import { Table } from 'antd';
 import EditTodo from "./EditTodo";
 
 const ListTodos = ({ allTodos, setTodosChange }) => {
   console.log(allTodos);
-  const [todos, setTodos] = useState([]); //empty array
+  const [todos, setTodos] = useState([]); 
 
   console.log('todos ', todos)
 
@@ -54,10 +54,11 @@ const ListTodos = ({ allTodos, setTodosChange }) => {
   }, [allTodos]);
 
   console.log(todos);
+  
 
   return (
     <Fragment>
-      <Table columns={columns} dataSource={todos} />
+      <Table columns={columns} dataSource={todos} pagination={{ pageSize: 5}} />
     </Fragment>
   );
 };

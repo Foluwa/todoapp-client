@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { Layout, Menu } from "antd";
 
 //components
 import InputTodo from "../../components/TodoList/InputTodo";
-// import EditTodo from "../../components/TodoList/EditTodo";
 import ListTodos from "../../components/TodoList/ListTodos";
+const { Header, Content } = Layout;
 
 const Dashboard = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [allTodos, setAllTodos] = useState([]);
   const [todosChange, setTodosChange] = useState(false);
+
+  const capitalizeFirstChar =(text) => {
+    let result = text.toLowerCase();
+    return result.charAt(0).toUpperCase() + result.slice(1);
+  }
 
   const getProfile = async () => {
     try {
@@ -19,6 +25,7 @@ const Dashboard = ({ setAuth }) => {
       });
 
       const parseData = await res.json();
+      console.log('parseData ', parseData);
 
       setAllTodos(parseData);
 
@@ -45,17 +52,28 @@ const Dashboard = ({ setAuth }) => {
   }, [todosChange]);
 
   return (
-    <div>
-      <div className="d-flex mt-5 justify-content-around">
-        <h2>{name} 's Todo List</h2>
-        <button onClick={e => logout(e)} className="btn btn-primary">
-          Logout
-        </button>
-      </div>
+    <Layout className="layout">
+      <Header>
+        <div className="logo" />
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={["2"]}
+          style={{ lineHeight: "64px" }}
+        >
+          <Menu.Item key="1">Todos Dashboard</Menu.Item>
+          <Menu.Item key="2"><span>{capitalizeFirstChar(name)}'s todo list</span></Menu.Item>
+          <Menu.Item key="3" onClick={e => logout(e)}>Logout</Menu.Item>
+        </Menu>
+      </Header>
 
-      <InputTodo setTodosChange={setTodosChange} />
-      <ListTodos allTodos={allTodos} setTodosChange={setTodosChange} />
-    </div>
+      <Content style={{ padding: "0 50px" }}>
+        <InputTodo setTodosChange={setTodosChange} />
+        <ListTodos allTodos={allTodos} setTodosChange={setTodosChange} />
+      </Content>
+
+    </Layout>
+
   );
 };
 
