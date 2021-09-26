@@ -1,10 +1,16 @@
 import React, { Fragment, useState } from "react";
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const InputTodo = ({ setTodosChange }) => {
   const [description, setDescription] = useState("");
+  const [addBtn, setAddBtn] = useState(false);
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const onSubmitForm = async e => {
     e.preventDefault();
+    setAddBtn(true);
     try {
       const myHeaders = new Headers();
 
@@ -25,8 +31,10 @@ const InputTodo = ({ setTodosChange }) => {
       setTodosChange(true);
       setDescription("");
       // window.location = "/";
+      setAddBtn(false);
     } catch (err) {
       console.error(err.message);
+      setAddBtn(false);
     }
   };
   return (
@@ -40,7 +48,13 @@ const InputTodo = ({ setTodosChange }) => {
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
-        <button className="btn btn-success ">Add</button>
+        <button className="btn btn-success ">{addBtn ? <Spin indicator={antIcon} /> : <>Add</>}</button>
+
+        {/* {btnLoading ? <Spin indicator={antIcon} /> :
+            <Button type="primary" htmlType="submit" onClick={onSubmitForm}>
+              Submit
+            </Button>
+          } */}
       </form>
     </Fragment>
   );

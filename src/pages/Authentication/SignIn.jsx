@@ -9,8 +9,8 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const SignIn = ({ setAuth }) => {
     const [btnLoading, setBtnLoading] = useState(false);
     const [inputs, setInputs] = useState({
-        email: "",
-        password: ""
+        email: "foluwa@gmail.com",
+        password: "foluwa"
     });
 
     const { email, password } = inputs;

@@ -1,9 +1,38 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { Table, Tag, Space } from 'antd';
 import EditTodo from "./EditTodo";
 
 const ListTodos = ({ allTodos, setTodosChange }) => {
   console.log(allTodos);
   const [todos, setTodos] = useState([]); //empty array
+
+  console.log('todos ', todos)
+
+  const columns = [
+    {
+      title: 'S/N',
+      dataIndex: 'todo_id',
+      key: 'todo_id',
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+    },
+    {
+      title: 'Edit',
+      dataIndex: 'edit',
+      key: 'edit',
+      render: (_, todo) => <EditTodo todo={todo} setTodosChange={setTodosChange} />,
+      //render: (_, todos) => <span>{todos.description}</span>,
+    },
+    {
+      title: 'Todo',
+      dataIndex: 'todo',
+      key: 'todo',
+      render: (_, todo) => <button className="btn btn-danger" onClick={() => deleteTodo(todo.todo_id)}> Delete </button>,
+    },
+  ]
 
   //delete todo function
 
@@ -20,14 +49,6 @@ const ListTodos = ({ allTodos, setTodosChange }) => {
     }
   }
 
-  // async function getTodos() {
-  //   const res = await fetch("http://localhost:5000/todos");
-
-  //   const todoArray = await res.json();
-
-  //   setTodos(todoArray);
-  // }
-
   useEffect(() => {
     setTodos(allTodos);
   }, [allTodos]);
@@ -36,42 +57,7 @@ const ListTodos = ({ allTodos, setTodosChange }) => {
 
   return (
     <Fragment>
-      {" "}
-      <table className="table mt-5">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/*<tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john@example.com</td>
-          </tr> */}
-
-          {todos.length !== 0 &&
-            todos[0].todo_id !== null &&
-            todos.map(todo => (
-              <tr key={todo.todo_id}>
-                <td>{todo.description}</td>
-                <td>
-                  <EditTodo todo={todo} setTodosChange={setTodosChange} />
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteTodo(todo.todo_id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <Table columns={columns} dataSource={todos} />
     </Fragment>
   );
 };
