@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Form, Input, Spin } from 'antd';
+import {Button, Form, Input, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const InputTodo = ({ setTodosChange }) => {
@@ -18,7 +18,7 @@ const InputTodo = ({ setTodosChange }) => {
       myHeaders.append("jwt_token", localStorage.token);
 
       const body = { description };
-      const response = await fetch("http://localhost:5000/dashboard/todos", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/dashboard/todos`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify(body)
@@ -39,16 +39,23 @@ const InputTodo = ({ setTodosChange }) => {
   };
   return (
     <Fragment>
-      <h1 className="text-center my-5">Input Todo</h1>
+      <h1 className="text-center my-5"> </h1>
       <form className="d-flex" onSubmit={onSubmitForm}>
 
         <Form.Item>
           <Form.Item>
-            <Input size="large" placeholder="Add Todo" value={description}
-              onChange={e => setDescription(e.target.value)} />
+            <Input size="large" 
+              placeholder="Add Todo" value={description}
+              onChange={e => setDescription(e.target.value)}
+              required
+               />
           </Form.Item>
           <Form.Item>
-            <button className="btn btn-success ">{addBtn ? <Spin indicator={antIcon} /> : <>Add</>}</button>
+            <Button 
+              type="primary" 
+              htmlType="submit">
+              {addBtn ? <Spin indicator={antIcon} /> : <>Add Todo</>}
+            </Button>
           </Form.Item>
         </Form.Item>
       </form>

@@ -3,7 +3,7 @@ import { Row, Form, Input, Button, Checkbox } from 'antd';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { toast } from "react-toastify";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const SignUp = ({ setAuth }) => {
@@ -25,7 +25,7 @@ const SignUp = ({ setAuth }) => {
         try {
             const body = { email, password, name };
             const response = await fetch(
-                "http://localhost:5000/authentication/register",
+                `${process.env.REACT_APP_API_URL}/authentication/register`,
                 {
                     method: "POST",
                     headers: {
@@ -81,6 +81,7 @@ const SignUp = ({ setAuth }) => {
                         name="name"
                         value={name}
                         onChange={e => onChange(e)}
+                        required
                     />
                 </Form.Item>
 
@@ -99,6 +100,7 @@ const SignUp = ({ setAuth }) => {
                         name="email"
                         value={email}
                         onChange={e => onChange(e)}
+                        required
                     />
                 </Form.Item>
 
@@ -117,6 +119,7 @@ const SignUp = ({ setAuth }) => {
                         name="password"
                         onChange={e => onChange(e)}
                         value={password}
+                        required
                     />
                 </Form.Item>
 
@@ -144,8 +147,9 @@ const SignUp = ({ setAuth }) => {
                         </Button>
                     }
                 </Form.Item>
-
+                <p>Already have an account? <Link to="/login"> Sign In</Link></p>
             </Form>
+            
         </Row>
     )
 }

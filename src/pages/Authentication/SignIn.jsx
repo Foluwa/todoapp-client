@@ -3,7 +3,7 @@ import { Row, Form, Input, Button, Checkbox } from 'antd';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { toast } from "react-toastify";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const SignIn = ({ setAuth }) => {
@@ -25,7 +25,7 @@ const SignIn = ({ setAuth }) => {
             const body = { email, password };
             console.log('BODY: ', body);
             const response = await fetch(
-                "http://localhost:5000/authentication/login",
+                `${process.env.REACT_APP_API_URL}/authentication/login`,
                 {
                     method: "POST",
                     headers: {
@@ -130,6 +130,7 @@ const SignIn = ({ setAuth }) => {
                         </Button>
                     }
                 </Form.Item>
+                <p>Dont have an account? <Link to="/register"> Sign Up</Link></p>
 
             </Form>
         </Row>
