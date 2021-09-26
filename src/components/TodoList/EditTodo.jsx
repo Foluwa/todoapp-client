@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Modal, Button } from 'antd';
+import { Modal, Button, Input } from 'antd';
 import { toast } from "react-toastify";
 const EditTodo = ({ todo, setTodosChange }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -59,7 +59,6 @@ const EditTodo = ({ todo, setTodosChange }) => {
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-      //footer={<><Button type="primary" onClick={handleOk}>Edit</Button> <Button onClick={handleCancel}>Cancel</Button></>}
 
       >
         <div
@@ -71,15 +70,14 @@ const EditTodo = ({ todo, setTodosChange }) => {
             <div className="modal-content">
 
               <div className="modal-body">
-                <input
+
+                <Input 
                   type="text"
-                  className="form-control"
+                  size="large"
+                  placeholder="Edit a Todo"
                   value={description}
                   onChange={e => setDescription(e.target.value)}
                 />
-              </div>
-
-              <div className="modal-footer">
               </div>
             </div>
           </div>

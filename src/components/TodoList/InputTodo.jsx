@@ -18,16 +18,14 @@ const InputTodo = ({ setTodosChange }) => {
       myHeaders.append("jwt_token", localStorage.token);
 
       const body = { description };
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/dashboard/todos`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/dashboard/todos`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify(body)
       });
 
-      const parseResponse = await response.json();
-
-      console.log(parseResponse);
-
+      //const parseResponse = await response.json();
+      // console.log(parseResponse);
       setTodosChange(true);
       setDescription("");
       // window.location = "/";
@@ -45,10 +43,12 @@ const InputTodo = ({ setTodosChange }) => {
         <Form.Item>
           <Form.Item>
             <Input size="large" 
-              placeholder="Add Todo" value={description}
+              placeholder="Add a Todo" 
+              value={description}
               onChange={e => setDescription(e.target.value)}
               required
                />
+
           </Form.Item>
           <Form.Item>
             <Button 

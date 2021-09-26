@@ -10,17 +10,17 @@ import {
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
-
-import "react-toastify/dist/ReactToastify.css";
+import NotFound from './pages/NotFound';
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 toast.configure();
 
 const App = () => {
   const checkAuthenticated = async () => {
     try {
-      //process.env.REACT_APP_API_URL
-      //const res = await fetch("http://localhost:5000/authentication/verify", {
+        //const res = await fetch("http://localhost:5000/authentication/verify", {
         const res = await fetch(`${process.env.REACT_APP_API_URL}/authentication/verify`, {
         method: "POST",
         headers: { jwt_token: localStorage.token }
@@ -89,6 +89,13 @@ const App = () => {
             ) : (
               <Redirect to="/login" />
             )
+          }
+        />
+        <Route
+          exact
+          path="*"
+          render={props =>
+            <NotFound />
           }
         />
       </Switch>

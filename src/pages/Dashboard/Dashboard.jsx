@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Layout, Menu } from "antd";
-
-//components
 import InputTodo from "../../components/TodoList/InputTodo";
 import ListTodos from "../../components/TodoList/ListTodos";
 const { Header, Content } = Layout;
@@ -12,8 +10,6 @@ const Dashboard = ({ setAuth }) => {
   const [allTodos, setAllTodos] = useState([]);
   const [todosChange, setTodosChange] = useState(false);
 
-  console.log('allTodos ', allTodos);
-
   const capitalizeFirstChar = (text) => {
     let result = text.toLowerCase();
     return result.charAt(0).toUpperCase() + result.slice(1);
@@ -21,16 +17,17 @@ const Dashboard = ({ setAuth }) => {
 
   const getProfile = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/dashboard/`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/dashboard`, {
         method: "GET",
         headers: { jwt_token: localStorage.token }
       });
-
       const parseData = await res.json();
-      console.log('parseData ', parseData);
-
-      setAllTodos(parseData);
-
+      // console.log('Parse_Data ', parseData);
+      // console.log('Parse_Data ID ', parseData[0]['todo_id']);
+      // console.log('Parse_Data DESC',  parseData[0]['description']);
+      if (parseData[0]['todo_id'] !== null && parseData[0]['description'] !== null) {
+        setAllTodos(parseData);
+      }
       setName(parseData[0].user_name);
     } catch (err) {
       console.error(err.message);
@@ -51,11 +48,9 @@ const Dashboard = ({ setAuth }) => {
   useEffect(() => {
     getProfile();
     setTodosChange(false);
-  }, [todosChange]); 
+  }, [todosChange]);
 
-  console.log('allTodos ', allTodos);
-  console.log('allTodos ', allTodos.isEmpty);
-  console.log('allTodos length ', allTodos.length);
+ 
   return (
     <Layout className="layout">
       <Header>
@@ -74,9 +69,12 @@ const Dashboard = ({ setAuth }) => {
       <Content style={{ padding: "0 50px" }}>
         <InputTodo setTodosChange={setTodosChange} />
 
-{/* Continue from here */}
-        {allTodos.length < 1 && allTodos[0].todo_id !== 'null' ? 
-          <h1>No todos found</h1> : <ListTodos allTodos={allTodos} setTodosChange={setTodosChange} />}
+        {/* {(typeof allTodos[0]['todo_id'] === "undefined") ?
+          <h1>No todos found</h1> : <ListTodos allTodos={allTodos} setTodosChange={setTodosChange} />} */}
+
+
+        <ListTodos allTodos={allTodos} setTodosChange={setTodosChange} />
+
       </Content>
 
     </Layout>

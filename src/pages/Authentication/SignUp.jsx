@@ -24,6 +24,7 @@ const SignUp = ({ setAuth }) => {
         setBtnLoading(true);
         try {
             const body = { email, password, name };
+            
             const response = await fetch(
                 `${process.env.REACT_APP_API_URL}/authentication/register`,
                 {

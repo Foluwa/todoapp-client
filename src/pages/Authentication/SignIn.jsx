@@ -9,8 +9,8 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const SignIn = ({ setAuth }) => {
     const [btnLoading, setBtnLoading] = useState(false);
     const [inputs, setInputs] = useState({
-        email: "foluwa@gmail.com",
-        password: "foluwa"
+        email: "",
+        password: ""
     });
 
     const { email, password } = inputs;
@@ -23,7 +23,6 @@ const SignIn = ({ setAuth }) => {
         setBtnLoading(true);
         try {
             const body = { email, password };
-            console.log('BODY: ', body);
             const response = await fetch(
                 `${process.env.REACT_APP_API_URL}/authentication/login`,
                 {

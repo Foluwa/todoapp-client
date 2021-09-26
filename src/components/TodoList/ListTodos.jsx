@@ -3,11 +3,7 @@ import { Button, Table } from 'antd';
 import EditTodo from "./EditTodo";
 import { toast } from "react-toastify";
 const ListTodos = ({ allTodos, setTodosChange }) => {
-  console.log(allTodos);
   const [todos, setTodos] = useState([]); 
-
-  console.log('todos ', todos)
-
   const columns = [
     {
       title: 'S/N',
@@ -51,16 +47,6 @@ const ListTodos = ({ allTodos, setTodosChange }) => {
   useEffect(() => {
     setTodos(allTodos);
   }, [allTodos]);
-
-  // function otherThanNull(arr) {
-  //   return arr.some(el => el !== null);
-  // }
-
-  
-  // console.log('todos ',todos);
-  // console.log('todos ',todos.length);
-  // console.log('todos ',otherThanNull(todos));
-  
 
   return (
     <Fragment>
